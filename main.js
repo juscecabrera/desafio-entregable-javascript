@@ -1,109 +1,73 @@
-const servicios = ["Manicura Gel", "Manicura Rubber Gel", "Uñas acrílicas", "Uñas Polygel", "Pedicure Gel", "Pedicure Rubber Gel"]
-const precios = [60, 50, 70, 60, 30, 20]
+let precioTotal = localStorage.getItem("precio")
 
-//Servicio Elegido
-
-let servicioPrompt = parseInt(prompt(`Por favor elija el servicio deseado: \n 1: ${servicios[0]} \n 2: ${servicios[1]} \n 3: ${servicios[2]} \n 4: ${servicios[3]} \n 5: ${servicios[4]} \n 6: ${servicios[5]}`))
-
-let servicioElegido = "";
-let precioElegido = 0;
-
-function selectService() {
-    switch (servicioPrompt) {
-        case 1: 
-        servicioElegido = servicios[0]
-        precioElegido = precios[0]
-        break
-        case 2: 
-        servicioElegido = servicios[1]
-        precioElegido = precios[1]
-        break
-        case 3: 
-        servicioElegido = servicios[2]
-        precioElegido = precios[2]
-        break
-        case 4: 
-        servicioElegido = servicios[3]
-        precioElegido = precios[3]
-        break
-        case 5: 
-        servicioElegido = servicios[4]
-        precioElegido = precios[4]
-        break
-        case 6: 
-        servicioElegido = servicios[5]
-        precioElegido = precios[5]
-        break
-        default: 
-        alert("Por favor ingrese un valor válido")
-        break
-        }
-}  
-
-if (servicioPrompt == 1 || servicioPrompt == 2 || servicioPrompt == 3 || servicioPrompt == 4 || servicioPrompt == 5 || servicioPrompt == 6 ) {
-    selectService()
-} else {
-    while (servicioPrompt !== 1 && servicioPrompt !== 2 && servicioPrompt !== 3 && servicioPrompt !== 4 && servicioPrompt !== 5 && servicioPrompt !== 6) {
-        alert("Por favor ingrese un valor válido")
-        servicioPrompt = parseInt(prompt(`Por favor elija el servicio deseado: \n 1: ${servicios[0]} \n 2: ${servicios[1]} \n 3: ${servicios[2]} \n 4: ${servicios[3]} \n 5: ${servicios[4]} \n 6: ${servicios[5]}`))
-    }
-    selectService()
+if (precioTotal == null) {
+    precioTotal = 0
 }
 
-//Tipo de servicio elegido
+const preciosObject = {
+    "Manicura Gel" : 60,
+    "Manicura Rubber Gel" : 50,
+    "Uñas acrílicas" : 70,
+    "Uñas Polygel" : 60,
+    "Pedicure Gel" : 30,
+    "Pedicure Rubber Gel" : 20
+}
+let servicioElegido = localStorage.getItem("servicio")
+document.getElementById("resultado-servicio").innerText = `${servicioElegido}`
 
-let premiumPrompt = parseInt(prompt("¿Desea el servicio premium por 10$ extras o el servicio normal? \n 1: Premium \n 2: Normal"))
+let horarioElegido = localStorage.getItem("horario")
+document.getElementById("resultado-horario").innerText = `${horarioElegido}`
 
-function selectPrice () {
-    if (premiumPrompt == 1) {
-        precioElegido += 10
+let tipoElegido = localStorage.getItem("tipo")
+document.getElementById("resultado-tipo").innerText = `${tipoElegido}`
+
+document.getElementById("precio-total").innerText = `A un precio total de: ${precioTotal}`
+
+function service(id) {
+    let idElegido = `button-service-${id}`
+    servicioElegido = (document.getElementById(idElegido).innerText)
+    precioTotal = preciosObject[servicioElegido]
+    document.getElementById("resultado-servicio").innerText = `${servicioElegido}`
+    document.getElementById("precio-total").innerText = `A un precio total de: ${precioTotal}`
+    localStorage.setItem("servicio", servicioElegido)
+}
+
+function horario(id) {
+    let idElegido = `button-horario-${id}`
+    horarioElegido = (document.getElementById(idElegido).innerText)
+    document.getElementById("resultado-horario").innerText = `${horarioElegido}`
+    localStorage.setItem("horario", horarioElegido)
+}
+
+function tipo(id) {
+    let idElegido = `button-tipo-${id}`
+    let servicioElegido = document.getElementById("resultado-servicio").innerText
+    let precioMaximo = preciosObject[servicioElegido] + 10
+    tipoElegido = (document.getElementById(idElegido).innerText)
+    document.getElementById("resultado-tipo").innerText = `${tipoElegido}`
+    if (id == 1 && precioTotal < precioMaximo) {
+        precioTotal+= 10
+    } else if (id == 2 && precioTotal == precioMaximo){
+        precioTotal-= 10
     } else {
-        precioElegido += 0
+        precioTotal+=0
     }
+    document.getElementById("precio-total").innerText = `A un precio total de: ${precioTotal}`
+    localStorage.setItem("tipo", tipoElegido)
+    localStorage.setItem("precio", precioTotal)
 }
 
-if (premiumPrompt == 1 || premiumPrompt == 2) {
-    selectPrice()
-} else {
-    while (premiumPrompt !== 1 && premiumPrompt !== 2) {
-        alert("Por favor ingrese un valor válido")
-        premiumPrompt = parseInt(prompt("¿Desea el servicio premium por 10$ extras o el servicio normal? \n 1: Premium \n 2: Normal"))
-    }
-    selectPrice()
+function reset() {
+    localStorage.setItem("servicio", "")
+    localStorage.setItem("horario", "")
+    localStorage.setItem("tipo", "")
+    localStorage.setItem("precio", "")
+    servicioElegido = localStorage.getItem("servicio")
+    horarioElegido = localStorage.getItem("horario")
+    tipoElegido = localStorage.getItem("tipo")
+    precioTotal = localStorage.getItem("precio")
+    document.getElementById("resultado-servicio").innerText = `${servicioElegido}`
+    document.getElementById("resultado-horario").innerText = `${horarioElegido}`
+    document.getElementById("resultado-tipo").innerText = `${tipoElegido}`
+    document.getElementById("precio-total").innerText = `A un precio total de: ${precioTotal}`
 }
-
-//Horario elegido
-
-let horarioPrompt = parseInt(prompt("Por favor elija el horario deseado: \n 1: 10:00h - 13:00h \n 2: 13:00h - 16:00h \n 3: 16:00h - 19:00h"))
-
-let horarioElegido = "";
-
-function selectHorario () {
-    switch (horarioPrompt) {
-        case 1: 
-        horarioElegido = "10:00h a 13:00h"
-        break
-        case 2: 
-        horarioElegido = "13:00h a 16:00h"
-        break
-        case 3: 
-        horarioElegido = "16:00h a 19:00h"
-        break
-        default: 
-        console.log("Por favor ingrese un valor válido")
-        break
-    }
-}
-
-if (horarioPrompt == 1 || horarioPrompt == 2 || horarioPrompt == 3) {
-    selectHorario();
-} else {
-    while (horarioPrompt !== 1 && horarioPrompt !== 2 && horarioPrompt !== 3) {
-        alert("Por favor ingrese un valor válido")
-        horarioPrompt = parseInt(prompt("Por favor elija el horario deseado: \n 1: 10:00h - 13:00h \n 2: 13:00h - 16:00h \n 3: 16:00h - 19:00h"))
-    }
-    selectHorario();
-}
-
-
-console.log(`Muchas gracias! Usted ha reservado el servicio de ${servicioElegido} en el horario de ${horarioElegido} por un precio a pagar de ${precioElegido}`); 

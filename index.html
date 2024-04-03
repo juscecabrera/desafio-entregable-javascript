@@ -3,11 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css" />
     <script defer src="./main.js"></script>
-    <title>Entregable 1 CoderHouse</title>
+    <title>Entregable 2 CoderHouse</title>
 </head>
 <body>
     <h1>Reserva de servicios de uñas</h1>
-    <p>Este simulador te permite elegir un servicio de diseño de uñas y un horario. Al elegirlos, te aparece en consola el servicio, el horario y el precio elegido!</p>
+
+    <p class="service-p">Bienvenido a Moka Nails! Por favor elija un servicio:</p>
+        <button id="button-service-1" onclick=service(1) class="button-service">Manicura Gel</button>
+        <button id="button-service-2" class="button-service" onclick=service(2)>Manicura Rubber Gel</button>
+        <button id="button-service-3" class="button-service" onclick=service(3)>Uñas acrílicas</button>
+        <button id="button-service-4" class="button-service" onclick=service(4)>Uñas Polygel</button>
+        <button id="button-service-5" class="button-service" onclick=service(5)>Pedicure Gel</button>
+        <button id="button-service-6" class="button-service" onclick=service(6)>Pedicure Rubber Gel</button>
+    <p class="horario-p">Por favor elija un horario:</p>
+        <button id="button-horario-1" class="button-horario" onclick=horario(1)>Mañana: 10:00h - 13:00h</button>
+        <button id="button-horario-2"  class="button-horario" onclick=horario(2)>Tarde: 13:00h - 16:00h</button>
+        <button id="button-horario-3"  class="button-horario" onclick=horario(3)>Noche: 16:00h - 19:00h</button>
+    <p class="horario-p">Por favor elija el tipo de servicio:</p>
+        <button id="button-tipo-1" class="button-type" onclick=tipo(1)>Premium (+10$)</button>
+        <button id="button-tipo-2" class="button-type" onclick=tipo(2)>Normal</button>
+    <p class="horario-p">Muchas gracias! Usted ha elegido el servicio de:</p>
+            <p class="resultado">Servicio: </p><p class="resultado-final" id="resultado-servicio"></p>
+            <p class="resultado">Horario: </p><p class="resultado-final" id="resultado-horario"></p>
+            <p class="resultado">Tipo: </p><p class="resultado-final" id="resultado-tipo"></p>
+    <p class="precio-p" id="precio-total">A un precio total de: </p>
+    <button id="button-new-order" onclick=reset()>Nueva orden</button>
 </body>
 </html>
