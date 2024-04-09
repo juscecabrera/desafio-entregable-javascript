@@ -1,91 +1,147 @@
-//08-04-2024 21:59hrs: estoy quitando los eventos en el html y el uso del local storage para arreglarlo desde cero
-
-
-
 const preciosArray = [
     {
-        "Manicura Gel": 60
+        id: 1,
+        nombre: "Manicura Gel",
+        precio: 60
     }, 
     {
-        "Manicura Rubber Gel": 50
+        id: 2,
+        nombre: "Manicura Rubber Gel",
+        precio: 50
     }, 
     {
-        "Uñas acrílicas": 70
+        id: 3,
+        nombre: "Uñas acrílicas",
+        precio: 70
     },
     {
-        "Uñas Polygel": 60
+        id: 4,
+        nombre: "Uñas Polygel",
+        precio: 60
     },
     {
-        "Pedicure Gel": 30
+        id: 5,
+        nombre: "Pedicure Gel",
+        precio: 30
     },
     {
-        "Pedicure Rubber Gel": 20
+        id: 6,
+        nombre: "Pedicure Rubber Gel",
+        precio: 20
     },
 ]
 
-const preciosObject = {
-    "Manicura Gel" : 60,
-    "Manicura Rubber Gel" : 50,
-    "Uñas acrílicas" : 70,
-    "Uñas Polygel" : 60,
-    "Pedicure Gel" : 30,
-    "Pedicure Rubber Gel" : 20
+let resultadoServicio = document.getElementById("button-service-container")
+
+function renderService(productsArray) {
+    productsArray.forEach(producto => {
+        const serviceButton = document.createElement("div")
+        serviceButton.innerHTML = `<button class="button-service" id="${producto.id}">${producto.nombre}</button>`
+        resultadoServicio.appendChild(serviceButton)
+    })
+    addService ()
 }
 
+renderService(preciosArray)
 
-let servicioElegido = document.getElementById(`button-service-${id}`)
-servicioElegido.addEventListener("click", service(id))
-
-document.getElementById("resultado-horario").innerText = `${horarioElegido}`
-
-
-document.getElementById("resultado-tipo").innerText = `${tipoElegido}`
-
-document.getElementById("precio-total").innerText = `A un precio total de: ${precioTotal}`
-
-function service(id) {
-    let idElegido = `button-service-${id}`
-    servicioElegido = (document.getElementById(idElegido).innerText)
-    precioTotal = preciosObject[servicioElegido]
-    document.getElementById("resultado-servicio").innerText = `${servicioElegido}`
-    document.getElementById("precio-total").innerText = `A un precio total de: ${precioTotal}`
+//addButton es un array con todos los botones y sus ids
+function addService() {
+    let addButton = document.querySelectorAll(".button-service")
+    addButton.forEach(button => {
+        button.onclick = (e) => {
+            const productID = e.currentTarget.id
+            const selectedProduct = preciosArray.find (producto => producto.id == productID)
+            document.getElementById("resultado-servicio").innerText = selectedProduct.nombre
+            document.getElementById("precio-total").innerHTML = `<p>A un precio total de : ${selectedProduct.precio}</p>`
+            localStorage.setItem("servicio", JSON.stringify(selectedProduct.nombre))
+            localStorage.setItem("precio", JSON.stringify(selectedProduct.precio))
+        }
+    })
     
 }
 
-function horario(id) {
-    let idElegido = `button-horario-${id}`
-    horarioElegido = (document.getElementById(idElegido).innerText)
-    document.getElementById("resultado-horario").innerText = `${horarioElegido}`
-    
+function addType () {
+    let addPrice = document.querySelectorAll(".button-type")
+    addPrice.forEach(button => {
+        button.onclick = (e) => {
+            const typeID = e.currentTarget.id
+            if (typeID == "button-tipo-1") {
+                document.getElementById("resultado-tipo").innerHTML = "Premium(+10$)"
+                document.getElementById("precio-total").innerText = `A un precio total de: ${preciosArray.find(producto => producto.nombre == document.getElementById("resultado-servicio").innerText).precio + 10}`
+                localStorage.setItem("tipo", "Premium(+10$")
+                localStorage.setItem("precio", JSON.stringify(preciosArray.find(producto => producto.nombre == document.getElementById("resultado-servicio").innerText).precio + 10))
+            } else {
+                document.getElementById("resultado-tipo").innerText = "Normal"
+                document.getElementById("precio-total").innerText = `A un precio total de: ${preciosArray.find(producto => producto.nombre == document.getElementById("resultado-servicio").innerText).precio}`
+                localStorage.setItem("tipo", "Normal")
+                localStorage.setItem("precio", JSON.stringify(preciosArray.find(producto => producto.nombre == document.getElementById("resultado-servicio").innerText).precio))
+            }
+            
+        }
+    })
 }
 
-function tipo(id) {
-    let idElegido = `button-tipo-${id}`
-    let servicioElegido = document.getElementById("resultado-servicio").innerText
-    let precioMaximo = preciosObject[servicioElegido] + 10
-    tipoElegido = (document.getElementById(idElegido).innerText)
-    document.getElementById("resultado-tipo").innerText = `${tipoElegido}`
-    if (id == 1 && precioTotal < precioMaximo) {
-        precioTotal+= 10
-    } else if (id == 2 && precioTotal == precioMaximo){
-        precioTotal-= 10
-    } else {
-        precioTotal+=0
-    }
-    document.getElementById("precio-total").innerText = `A un precio total de: ${precioTotal}`
+addType();
+
+function addSchedule () {
+    let addTime = document.querySelectorAll(".button-horario")
+    addTime.forEach(button => {
+        button.onclick = (e) => {
+            const typeID = e.currentTarget.id
+            if (typeID == "button-horario-1") {
+                document.getElementById("resultado-horario").innerText = "Mañana: 10:00h - 13:00h"
+                localStorage.setItem("horario", "Mañana: 10:00h - 13:00h")
+            } else if (typeID == "button-horario-2") {
+                document.getElementById("resultado-horario").innerText = "Tarde: 13:00h - 16:00h"
+                localStorage.setItem("horario", "Tarde: 13:00h - 16:00h")
+            } else {
+                document.getElementById("resultado-horario").innerText = "Noche: 16:00h - 19:00h"
+                localStorage.setItem("horario", "Noche: 16:00h - 19:00h")
+            }
+        }
+    })
+}
+addSchedule();
+
+//Para el boton reset: resetea el localStorage y los resultados
+function reset() {
+    localStorage.setItem("servicio", "")
+    localStorage.setItem("horario", "")
+    localStorage.setItem("tipo", "")
+    localStorage.setItem("precio", "")
+    document.getElementById("resultado-servicio").innerText = ``
+    document.getElementById("resultado-horario").innerText = ``
+    document.getElementById("resultado-tipo").innerText = ``
+    document.getElementById("precio-total").innerText = `A un precio total de: `
 }
 
-// function reset() {
-//     localStorage.setItem("servicio", "")
-//     localStorage.setItem("horario", "")
-//     localStorage.setItem("tipo", "")
-//     localStorage.setItem("precio", "")
-//     servicioElegido = localStorage.getItem("servicio")
-//     horarioElegido = localStorage.getItem("horario")
-//     tipoElegido = localStorage.getItem("tipo")
-//     precioTotal = localStorage.getItem("precio")
-//     document.getElementById("resultado-servicio").innerText = `${servicioElegido}`
-//     document.getElementById("resultado-horario").innerText = `${horarioElegido}`
-//     document.getElementById("resultado-tipo").innerText = `${tipoElegido}`
-//     document.getElementById("precio-total").innerText = `A un precio total de: ${precioTotal}`
-// }
+let resetButton = document.getElementById("button-reset")
+resetButton.addEventListener("click", reset)
+
+//Al abrir el html, los condicionales recogen el localStorage
+if (JSON.parse(localStorage.getItem("servicio")) !== "") {
+    document.getElementById("resultado-servicio").innerText = JSON.parse(localStorage.getItem("servicio"))
+} else {
+    document.getElementById("resultado-servicio").innerText = ""
+}
+
+//Estos no estan parseados porque ya son strings
+if (localStorage.getItem("tipo") !== "") {
+    document.getElementById("resultado-tipo").innerText = localStorage.getItem("tipo")
+} else {
+    document.getElementById("resultado-tipo").innerText = ""
+}
+
+if (localStorage.getItem("horario") !== "") {
+    document.getElementById("resultado-horario").innerText = localStorage.getItem("horario")
+} else {
+    document.getElementById("resultado-horario").innerText = ""
+}
+
+if (localStorage.getItem("precio") !== "") {
+    document.getElementById("precio-total").innerText =  `A un precio total de: ${localStorage.getItem("precio")}`
+} else {
+    document.getElementById("precio-total").innerText =  `A un precio total de: `
+}
+
+
