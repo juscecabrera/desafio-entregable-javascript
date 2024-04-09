@@ -44,7 +44,6 @@ function renderService(productsArray) {
 
 renderService(preciosArray)
 
-
 //addButton es un array con todos los botones y sus ids
 function addService() {
     let addButton = document.querySelectorAll(".button-service")
@@ -65,11 +64,31 @@ function addType () {
             const typeID = e.currentTarget.id
             if (typeID == "button-tipo-1") {
                 document.getElementById("resultado-tipo").innerHTML = "Premium(+10$)"
+                document.getElementById("precio-total").innerText = `A un precio total de: ${preciosArray.find(producto => producto.nombre == document.getElementById("resultado-servicio").innerText).precio + 10}`
+
             } else {
                 document.getElementById("resultado-tipo").innerText = "Normal"
+                document.getElementById("precio-total").innerText = `A un precio total de: ${preciosArray.find(producto => producto.nombre == document.getElementById("resultado-servicio").innerText).precio}`
             }
         }
     })
 }
 
 addType()
+
+function addSchedule () {
+    let addTime = document.querySelectorAll(".button-horario")
+    addTime.forEach(button => {
+        button.onclick = (e) => {
+            const typeID = e.currentTarget.id
+            if (typeID == "button-horario-1") {
+                document.getElementById("resultado-horario").innerText = "Mañana: 10:00h - 13:00h"
+            } else if (typeID == "button-horario-2") {
+                document.getElementById("resultado-horario").innerText = "Tarde: 13:00h - 16:00h"
+            } else {
+                document.getElementById("resultado-horario").innerText = "Noche: 16:00h - 19:00h"
+            }
+        }
+    })
+}
+addSchedule();
