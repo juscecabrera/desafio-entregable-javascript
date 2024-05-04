@@ -1,0 +1,91 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body, button {
+    background-color: lightblue;
+}
+h1 {
+    font-size: 40px;
+    padding: 70px;
+}
+
+p {
+    font-size: 30px;
+    padding: 0px 70px;
+}
+
+.horario-p {
+    font-size: 30px;
+    margin-top: 50px;
+}
+
+button {
+    width: 180px;
+    padding: 20px;
+    margin: 40px 10px 50px 70px;
+    overflow: auto;
+}
+
+button:hover {
+    background-color: rgb(150, 187, 200);
+    cursor: pointer;
+}
+
+.button-horario, .button-type {
+    width: 200px;
+    padding: 20px;
+    margin: 40px 10px 10px 70px;
+}
+
+.resultado {
+    font-weight: bold;
+}
+
+.result-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+
+.precio-p {
+    font-size: 30px;
+    margin: 50px 0 40px 0;
+}
+
+.resultado-final{
+    padding: 0px;
+    margin-left: 10px;
+    width: 250px;
+}
+
+#resultado-horario, #resultado-servicio {
+    width: 350px;
+}
+#button-reset, #button-confirm {
+    font-size: large;
+    width: 250px;
+    padding: 40px;
+    margin: 40px 10px 100px 100px;
+    overflow: auto;
+}
+
+#button-reset:hover, #button-confirm:hover {
+    background-color: rgb(150, 187, 200);
+    cursor: pointer;
+}
+
+
+
+/* v2 */
+
+#button-service-container {
+    display: flex;
+    flex-direction: row;
+}
+
+
+

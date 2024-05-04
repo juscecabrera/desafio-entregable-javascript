@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script defer src="./main.js"></script>
+    <script defer src="./localStorage.js"></script>
+    <title>Reservas | Moka Nails</title>
+</head>
+<body>
+    <h1>Bienvenido a Moka Nails!</h1>
+
+    <p class="service-p"> Por favor elija un servicio:</p>
+        <div id="button-service-container"></div>
+        
+    <p class="horario-p">Por favor elija el tipo de servicio:</p>
+        <div id="button-type-container"></div>
+        
+    <p class="horario-p">Por favor elija un horario:</p>
+        <div id="button-horario-container"></div>
+    
+    <p class="horario-p">Muchas gracias! Usted ha elegido:</p>
+        <div class="result-wrapper">
+                <p class="resultado">Servicio: </p><p class="resultado-final" id="resultado-servicio"></p>
+                <p class="resultado">Tipo: </p><p class="resultado-final" id="resultado-tipo"></p>
+                <p class="resultado">Horario: </p><p class="resultado-final" id="resultado-horario"></p>
+            </div>
+        <p class="precio-p" id="precio-total">Precio final: </p>
+    
+    <button id="button-reset" class="button-reset">Nueva orden</button>
+    <button id="button-confirm" class="button-reset">Confirmar compra</button>
+</body>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</html>
